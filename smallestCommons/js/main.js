@@ -26,14 +26,6 @@ let getPrimeFactors = (num) => {
     return factors;
 };
 
-// Multiply all the elements of a given array
-let multiplyArr = (arr) => {
-    let product = arr.reduce((a, b) => {
-        return a * b;
-    });
-    return product;
-};
-
 // Usage `arr.filter(onlyUnique)`
 let onlyUnique = (value, index, self) => {
     return self.indexOf(value) === index;
@@ -91,7 +83,7 @@ let smallestCommons = (arr) => {
 
     console.log('fpf', finalPrimeFactors);
     // Multiply the prime factors for the answer
-    return multiplyArr(finalPrimeFactors);
+    return finalPrimeFactors.reduce((a, b) => { return a * b; });
 };
 
 
