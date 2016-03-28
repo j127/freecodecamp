@@ -11,28 +11,6 @@ let ascendingRange = (arr) => {
     return range;
 };
 
-// From the pseudocode here: https://en.wikipedia.org/wiki/Primality_test#Pseudocode
-let isPrime = (num) => {
-    let i = 5;
-
-    if (num <= 1) {
-        return false;
-    } else if (num <= 3) {
-        return true;
-    } else if ((num % 2 === 0) || (num % 3 === 0)) {
-        return false;
-    }
-
-    while (i * i <= num) {
-        if ((num % i === 0) || (num % (i + 2) === 0)) {
-            return false;
-        }
-        i += 6;
-    }
-
-    return true;
-};
-
 // Return an array of prime factors for num
 let getPrimeFactors = (num) => {
     let factors = [];
@@ -57,9 +35,20 @@ let multiplyArr = (arr) => {
 };
 
 // Usage `arr.filter(onlyUnique)`
-var onlyUnique = (value, index, self) => {
+let onlyUnique = (value, index, self) => {
     return self.indexOf(value) === index;
 }
+
+// Return how many times thing is in arr
+let countItemsInArray = (thing, arr) => {
+    count = 0;
+    arr.forEach((i) => {
+        if (i === thing) {
+            count += 1;
+        }
+    });
+    return count;
+};
 
 let smallestCommons = (arr) => {
     let multiples = ascendingRange(arr);
@@ -76,22 +65,31 @@ let smallestCommons = (arr) => {
     // Filter to a unique list
     let flattenedPrimeFactors = [].concat.apply([], primeFactors);
     let uniqPrimeFactors = flattenedPrimeFactors.filter(onlyUnique);
-
+    console.log(primeFactors);
     // Find the largest amounts of each prime factor
+    let d = {};
     uniqPrimeFactors.forEach((n) => {
         console.log('n', n);
+        d[n] = 0;
         // Loop over primeFactors.
         // Count the number of times `n` occurs in that group of prime factors
-        // If it's larger than the highest number of seen `n`s, then replace
-        // {
-        //      '2': 3,
-        //      '3': 2,
-        //      '5': 5
-        // }
+        primeFactors.forEach((a) => {
+            let c = countItemsInArray(n, a);
+            if ((d[n] !== undefined) && (d[n] < c)) {
+                d[n] = c;
+            }
+        });
     });
 
-    // TODO: replace this with dynamic array
-    let finalPrimeFactors = [2, 2, 2, 3, 3, 5, 7, 11, 13]
+    console.log(d);
+    let finalPrimeFactors = []
+    Object.keys(d).forEach((k) => {
+        for (let i = 0, iLen = d[k]; i < iLen; i++) {
+            finalPrimeFactors.push(k);
+        }
+    });
+
+    console.log('fpf', finalPrimeFactors);
     // Multiply the prime factors for the answer
     return multiplyArr(finalPrimeFactors);
 };
