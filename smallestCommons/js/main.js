@@ -1,5 +1,5 @@
 // Take a 2-element array and return an ascending range
-let ascendingRange = (arr) => {
+let ascendingRange = function (arr) {
     let from, to,
         range = [];
 
@@ -12,7 +12,7 @@ let ascendingRange = (arr) => {
 };
 
 // Return an array of prime factors for num
-let getPrimeFactors = (num) => {
+let getPrimeFactors = function (num) {
     let factors = [];
     if (num < 2) {
         return [];
@@ -27,13 +27,13 @@ let getPrimeFactors = (num) => {
 };
 
 // Usage `arr.filter(onlyUnique)`
-let onlyUnique = (value, index, self) => {
+let onlyUnique = function (value, index, self) {
     return self.indexOf(value) === index;
 }
 
 // Return how many times thing is in arr
-let countItemsInArray = (thing, arr) => {
-    count = 0;
+let countItemsInArray = function (thing, arr) {
+    let count = 0;
     arr.forEach((i) => {
         if (i === thing) {
             count += 1;
@@ -42,7 +42,7 @@ let countItemsInArray = (thing, arr) => {
     return count;
 };
 
-let smallestCommons = (arr) => {
+let smallestCommons = function (arr) {
     let multiples = ascendingRange(arr);
 
     // Find prime factors of all numbers in range
@@ -88,10 +88,13 @@ let smallestCommons = (arr) => {
 
 
 // Do stuff to the DOM
-let main = () => {
-    let answer = smallestCommons([1, 13]);
-    let el = document.getElementById('outputArea');
-    el.innerText = answer;
+let main = function () {
+    let answer = smallestCommons([13, 1]);
+    let output = document.createElement('div');
+    let txt = document.createTextNode(`Answer: ${answer}`);
+    output.appendChild(txt);
+    let b = document.getElementsByName('body');
+    document.body.insertBefore(output, b[0]);
 };
 
 main();
